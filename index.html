@@ -3,78 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Portfolio | Adharsh</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Minimal Navigation -->
     <nav>
-        <div class="nav-container">
-            <h2>Portfolio.</h2>
+        <div class="nav-container fade-in">
+            <div class="logo">Adharsh.</div>
             <ul>
                 <li><a href="#about">About</a></li>
-                <li><a href="#education">Education</a></li>
-                <li><a href="#projects">Interests & Projects</a></li>
+                <li><a href="#work">Work</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </div>
     </nav>
 
+    <!-- Hero Section with subtle animation -->
     <header id="hero">
-        <div class="hero-content">
-            <h1>Hi, I'm [Your Name]</h1>
-            <p>Computer Science Student | Tech Enthusiast | System Optimizer</p>
-            <a href="#contact" class="btn">Get In Touch</a>
+        <div class="hero-content slide-up">
+            <p class="mono-text">Hello, I am</p>
+            <h1>Adharsh</h1>
+            <p class="subtitle">Computer Science Student & System Optimizer.</p>
+            <div class="hero-links">
+                <a href="#work" class="btn">View Projects</a>
+                <a href="#contact" class="btn btn-outline">Contact Me</a>
+            </div>
         </div>
     </header>
 
-    <section id="about" class="container">
-        <h2>About Me</h2>
-        <p>I am a tech enthusiast with a strong foundation in computer science and a keen eye for system optimization. I am actively researching dynamic, high-employability undergraduate programs like B.Voc and emerging tech fields. Whether it's drafting production-ready technical documentation (PRDs/RFCs), exploring infrastructure-as-code tools like Terraform, or pushing mid-range hardware to its absolute limits for optimal rendering, I love diving deep into how systems work.</p>
+    <!-- About Section -->
+    <section id="about" class="container reveal">
+        <div class="section-header">
+            <span class="mono-text">01.</span>
+            <h2>About Me</h2>
+        </div>
+        <div class="about-content">
+            <p>I am a computer science student with a VHSE background, currently exploring high-employability technical fields. I specialize in system optimization, technical documentation (PRDs/RFCs), and pushing hardware performance to its limits. I prefer clean, highly functional solutions over unnecessary visual clutter.</p>
+        </div>
     </section>
 
-    <section id="education" class="container bg-darker">
-        <h2>Education & Activities</h2>
-        <div class="card-grid">
+    <!-- Work/Projects Section -->
+    <section id="work" class="container reveal">
+        <div class="section-header">
+            <span class="mono-text">02.</span>
+            <h2>Technical Interests</h2>
+        </div>
+        <div class="grid">
             <div class="card">
-                <h3>VHSE Computer Science</h3>
-                <p><strong>Status:</strong> Completed</p>
-                <p>Secured high academic standing (83-90%). Gained a robust understanding of core computer science principles, programming, and hardware fundamentals.</p>
+                <div class="card-top">
+                    <span class="folder-icon">📁</span>
+                    <h3>Mobile Optimization</h3>
+                </div>
+                <p>Tweaking rendering pipelines and testing custom launchers to maximize performance on mid-range hardware.</p>
             </div>
             <div class="card">
-                <h3>National Service Scheme (NSS)</h3>
-                <p><strong>Role:</strong> Volunteer</p>
-                <p>Participated in community building and leadership activities, fostering teamwork and social responsibility.</p>
+                <div class="card-top">
+                    <span class="folder-icon">📁</span>
+                    <h3>Tech Architecture</h3>
+                </div>
+                <p>Structuring production-ready documentation using Markdown, focusing on clear, industry-standard RFCs.</p>
+            </div>
+            <div class="card">
+                <div class="card-top">
+                    <span class="folder-icon">📁</span>
+                    <h3>Infrastructure</h3>
+                </div>
+                <p>Researching modern deployment automation and infrastructure-as-code tools like Terraform.</p>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="container">
-        <h2>Projects & Technical Interests</h2>
-        <div class="card-grid">
-            <div class="card">
-                <h3>Mobile Hardware Optimization</h3>
-                <p>Extensive experience in tweaking rendering pipelines and benchmarking performance on Snapdragon 600-series devices. Specialized in utilizing custom launchers and specific renderer configurations to maximize FPS in heavy applications.</p>
-            </div>
-            <div class="card">
-                <h3>Technical Documentation & Architecture</h3>
-                <p>Drafting and structuring professional documentation, including Product Requirements Documents (PRDs) and Requests for Comments (RFCs), utilizing Markdown for clean, industry-standard formatting.</p>
-            </div>
-            <div class="card">
-                <h3>Infrastructure & Operations</h3>
-                <p>Exploring modern DevOps and infrastructure-as-code platforms, with a growing interest in deployment automation and tools like Terraform.</p>
-            </div>
+    <!-- Contact Section -->
+    <section id="contact" class="container reveal text-center">
+        <div class="section-header center-header">
+            <span class="mono-text">03.</span>
+            <h2>Get In Touch</h2>
         </div>
+        <p class="contact-text">Currently based in Thrissur, Kerala. I'm always open to discussing tech, optimization, and new opportunities.</p>
+        <a href="mailto:your.email@example.com" class="btn">Say Hello</a>
     </section>
 
-    <footer id="contact">
-        <div class="container text-center">
-            <h2>Let's Connect</h2>
-            <p>Currently based in Thrissur, Kerala.</p>
-            <p>Email: <a href="mailto:your.email@example.com" class="text-link">your.email@example.com</a></p>
-            <p>GitHub: <a href="https://github.com/yourusername" target="_blank" class="text-link">github.com/yourusername</a></p>
-            <br>
-            <p class="copyright">&copy; 2026 [Your Name]. All rights reserved.</p>
-        </div>
+    <footer>
+        <p class="mono-text">&copy; 2026 Adharsh. Built with minimalism in mind.</p>
     </footer>
 </body>
 </html>
