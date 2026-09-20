@@ -7,10 +7,15 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Floating Ambient Orbs (Background) -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container fade-in-down">
-            <div class="logo">Adharsh<span>.</span></div>
+            <div class="logo">Adharsh<span>_</span></div>
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#tech">Tech</a></li>
@@ -22,10 +27,11 @@
     <!-- Hero Section -->
     <header id="hero">
         <div class="hero-content">
-            <p class="mono-text slide-up-delay-1">System Initialize...</p>
-            <h1 class="gradient-text slide-up-delay-2">Adharsh TU</h1>
-            <p class="subtitle slide-up-delay-3">BCA Student @ St. Thomas College | Tech Enthusiast</p>
-            <div class="hero-links slide-up-delay-4">
+            <!-- JavaScript Typing Effect targets this ID -->
+            <p class="mono-text" id="typewriter"></p>
+            <h1 class="gradient-text slide-up-delay-1">Adharsh TU</h1>
+            <p class="subtitle slide-up-delay-2">BCA Student @ St. Thomas College | Tech Enthusiast</p>
+            <div class="hero-links slide-up-delay-3">
                 <a href="#tech" class="btn">Explore My World</a>
             </div>
         </div>
@@ -35,7 +41,7 @@
     </header>
 
     <!-- About Section -->
-    <section id="about" class="container">
+    <section id="about" class="container reveal">
         <div class="section-header">
             <span class="mono-text">01.</span>
             <h2>Who Am I?</h2>
@@ -50,22 +56,20 @@
     </section>
 
     <!-- Tech/Interests Section -->
-    <section id="tech" class="container">
+    <section id="tech" class="container reveal">
         <div class="section-header">
             <span class="mono-text">02.</span>
             <h2>Tech Interests</h2>
         </div>
         <div class="grid">
             <div class="glass-card">
-                <div class="card-glow"></div>
                 <div class="card-content">
                     <span class="icon">🎮</span>
-                    <h3>Game & System Optimization</h3>
+                    <h3>System Optimization</h3>
                     <p>Testing renderers, tweaking custom launchers, and maximizing FPS on mid-range hardware.</p>
                 </div>
             </div>
             <div class="glass-card">
-                <div class="card-glow"></div>
                 <div class="card-content">
                     <span class="icon">💻</span>
                     <h3>Software Architecture</h3>
@@ -73,7 +77,6 @@
                 </div>
             </div>
             <div class="glass-card">
-                <div class="card-glow"></div>
                 <div class="card-content">
                     <span class="icon">🤝</span>
                     <h3>Skill Support</h3>
@@ -84,7 +87,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="container text-center">
+    <section id="contact" class="container text-center reveal">
         <div class="section-header center-header">
             <span class="mono-text">03.</span>
             <h2>Connect With Me</h2>
@@ -96,5 +99,23 @@
     <footer>
         <p class="mono-text">&copy; 2026 Adharsh TU.</p>
     </footer>
+
+    <!-- JavaScript for Terminal Typing Effect -->
+    <script>
+        const text = "> System Initialize... Welcome to the workspace.";
+        let i = 0;
+        const speed = 50; 
+        
+        function typeWriter() {
+            if (i < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        
+        // Starts the typing effect once the page loads
+        window.onload = typeWriter;
+    </script>
 </body>
 </html>
