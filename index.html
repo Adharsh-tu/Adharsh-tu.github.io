@@ -1,121 +1,2051 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adharsh TU | Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#09090b">
+<meta name="description" content="Reverse Syllabus — Skill to Curriculum Mapping Engine">
+<title>Reverse Syllabus</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={
+ darkMode:"class",
+ theme:{
+  extend:{
+   fontFamily:{
+    sans:["system-ui","-apple-system","Inter","Segoe UI",sans-serif]
+   }
+  }
+ }
+};
+</script>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<style>
+:root{
+ color-scheme:dark;
+ --bg:#09090b;
+ --panel:rgba(24,24,27,.78);
+ --border:rgba(255,255,255,.085);
+ --muted:#a1a1aa;
+ --indigo:#818cf8;
+ --emerald:#34d399;
+ --amber:#fbbf24;
+ --red:#fb7185;
+}
+
+*{box-sizing:border-box}
+
+html{
+ scroll-behavior:smooth;
+ background:var(--bg);
+}
+
+body{
+ margin:0;
+ min-height:100vh;
+ overflow-x:hidden;
+ background:
+ radial-gradient(circle at 15% 0%,rgba(99,102,241,.12),transparent 32rem),
+ radial-gradient(circle at 90% 20%,rgba(16,185,129,.07),transparent 28rem),
+ var(--bg);
+ color:#f4f4f5;
+ font-family:system-ui,-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",sans-serif;
+ -webkit-font-smoothing:antialiased;
+}
+
+button,input,textarea,select{font:inherit}
+button,select{-webkit-tap-highlight-color:transparent}
+button{min-height:44px}
+
+.glass{
+ background:var(--panel);
+ border:1px solid var(--border);
+ backdrop-filter:blur(18px);
+ -webkit-backdrop-filter:blur(18px);
+}
+
+.grid-bg{
+ background-image:
+ linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+ background-size:32px 32px;
+}
+
+.hero-grid{
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ mask-image:linear-gradient(to bottom,black,transparent 85%);
+ -webkit-mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+
+.hero-grid:after{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:
+ radial-gradient(circle at 50% 30%,transparent 0 15rem,rgba(9,9,11,.8) 42rem);
+}
+
+.score-ring{
+ transform:rotate(-90deg);
+ transform-origin:50% 50%;
+}
+
+.score-ring-track,
+.score-ring-value{
+ fill:none;
+ stroke-width:10;
+}
+
+.score-ring-track{stroke:rgba(255,255,255,.07)}
+
+.score-ring-value{
+ stroke:#818cf8;
+ stroke-linecap:round;
+ transition:stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1);
+ filter:drop-shadow(0 0 8px rgba(129,140,248,.3));
+}
+
+.animate-in{
+ animation:reveal .55s cubic-bezier(.22,1,.36,1) both;
+}
+
+@keyframes reveal{
+ from{opacity:0;transform:translateY(12px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+.pulse-dot{
+ animation:pulseDot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulseDot{
+ 0%,100%{opacity:.35;transform:scale(.85)}
+ 50%{opacity:1;transform:scale(1)}
+}
+
+.scan-line{
+ position:absolute;
+ left:0;
+ right:0;
+ height:1px;
+ background:linear-gradient(90deg,transparent,#818cf8,transparent);
+ box-shadow:0 0 16px rgba(129,140,248,.7);
+ animation:scan 1.6s linear infinite;
+}
+
+@keyframes scan{
+ from{top:0;opacity:0}
+ 15%{opacity:1}
+ 85%{opacity:1}
+ to{top:100%;opacity:0}
+}
+
+.progress-fill{
+ width:0%;
+ transition:width 1s cubic-bezier(.22,1,.36,1);
+}
+
+.bar-animated{
+ animation:barIn .9s cubic-bezier(.22,1,.36,1) both;
+ transform-origin:left;
+}
+
+@keyframes barIn{
+ from{transform:scaleX(0)}
+ to{transform:scaleX(1)}
+}
+
+.chip{
+ transition:transform .18s ease,border-color .18s ease,background .18s ease;
+}
+
+.chip:hover{
+ transform:translateY(-1px);
+ border-color:rgba(129,140,248,.45);
+ background:rgba(99,102,241,.1);
+}
+
+.chip:active{transform:scale(.97)}
+
+.metric-card{
+ transition:transform .2s ease,border-color .2s ease;
+}
+
+.metric-card:hover{
+ transform:translateY(-2px);
+ border-color:rgba(255,255,255,.14);
+}
+
+.accordion-content{
+ display:grid;
+ grid-template-rows:0fr;
+ transition:grid-template-rows .3s ease;
+}
+
+.accordion-content.open{grid-template-rows:1fr}
+
+.accordion-inner{overflow:hidden}
+
+.toast{
+ transform:translateY(120px);
+ opacity:0;
+ transition:transform .3s ease,opacity .3s ease;
+ pointer-events:none;
+}
+
+.toast.show{
+ transform:translateY(0);
+ opacity:1;
+}
+
+.loading-bar{
+ position:relative;
+ overflow:hidden;
+}
+
+.loading-bar:after{
+ content:"";
+ position:absolute;
+ inset:0;
+ transform:translateX(-100%);
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+ animation:shimmer 1s infinite;
+}
+
+@keyframes shimmer{
+ to{transform:translateX(100%)}
+}
+
+textarea{
+ resize:vertical;
+ min-height:190px;
+}
+
+textarea:focus,select:focus{
+ outline:none;
+ border-color:rgba(129,140,248,.65)!important;
+ box-shadow:0 0 0 3px rgba(99,102,241,.11);
+}
+
+.tooltip{position:relative}
+
+.tooltip:hover:after{
+ content:attr(data-tip);
+ position:absolute;
+ z-index:20;
+ bottom:calc(100% + 8px);
+ left:50%;
+ transform:translateX(-50%);
+ white-space:nowrap;
+ padding:6px 9px;
+ border-radius:7px;
+ background:#18181b;
+ border:1px solid #3f3f46;
+ color:#d4d4d8;
+ font-size:11px;
+}
+
+@media(max-width:640px){
+ .hero-title{letter-spacing:-.04em}
+ .glass{
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+ }
+ textarea{min-height:170px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+  animation-duration:.001ms!important;
+  animation-iteration-count:1!important;
+  scroll-behavior:auto!important;
+  transition-duration:.001ms!important;
+ }
+}
+</style>
 </head>
 <body>
-    <!-- Floating Ambient Orbs (Background) -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container fade-in-down">
-            <div class="logo">Adharsh<span>_</span></div>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#tech">Tech</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </nav>
+<div class="fixed inset-0 grid-bg opacity-40 pointer-events-none"></div>
+<div class="hero-grid"></div>
 
-    <!-- Hero Section -->
-    <header id="hero">
-        <div class="hero-content">
-            <!-- JavaScript Typing Effect targets this ID -->
-            <p class="mono-text" id="typewriter"></p>
-            <h1 class="gradient-text slide-up-delay-1">Adharsh TU</h1>
-            <p class="subtitle slide-up-delay-2">BCA Student @ St. Thomas College | Tech Enthusiast</p>
-            <div class="hero-links slide-up-delay-3">
-                <a href="#tech" class="btn">Explore My World</a>
-            </div>
-        </div>
-        <div class="scroll-indicator fade-in-up">
-            <span>↓</span>
-        </div>
-    </header>
+<header class="relative z-10 border-b border-white/[.07]">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 items-center justify-between">
 
-    <!-- About Section -->
-    <section id="about" class="container reveal">
-        <div class="section-header">
-            <span class="mono-text">01.</span>
-            <h2>Who Am I?</h2>
-        </div>
-        <div class="glass-panel">
-            <p>I am currently pursuing my <strong>BCA at St. Thomas College, Thrissur</strong>. My deep fascination with all things tech didn't start in a classroom—it started with games like <strong>Minecraft</strong>. Exploring mods, tweaking rendering pipelines, and pushing hardware limits sparked a fire in me to understand how systems actually work.</p>
-            <br>
-            <p>I believe in community and love supporting anyone who has genuine skills and passion. Whether it's discussing hardware optimization, new software, or system architecture, I'm always ready to collaborate.</p>
-            <br>
-            <p class="joke-text"><em>P.S. Currently on the active hunt for a good laptop 😂</em></p>
-        </div>
-    </section>
+<a href="#" class="flex items-center gap-3 group">
+<div class="grid h-9 w-9 place-items-center rounded-xl border border-indigo-400/20 bg-indigo-500/10 text-indigo-300">
+<i data-lucide="scan-search" class="h-5 w-5"></i>
+</div>
+<div>
+<div class="text-sm font-semibold tracking-tight">Reverse Syllabus</div>
+<div class="text-[10px] uppercase tracking-[.18em] text-zinc-500">Skill → Curriculum</div>
+</div>
+</a>
 
-    <!-- Tech/Interests Section -->
-    <section id="tech" class="container reveal">
-        <div class="section-header">
-            <span class="mono-text">02.</span>
-            <h2>Tech Interests</h2>
-        </div>
-        <div class="grid">
-            <div class="glass-card">
-                <div class="card-content">
-                    <span class="icon">🎮</span>
-                    <h3>System Optimization</h3>
-                    <p>Testing renderers, tweaking custom launchers, and maximizing FPS on mid-range hardware.</p>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div class="card-content">
-                    <span class="icon">💻</span>
-                    <h3>Software Architecture</h3>
-                    <p>Writing clean, production-ready documentation (PRDs/RFCs) and exploring how large-scale apps are built.</p>
-                </div>
-            </div>
-            <div class="glass-card">
-                <div class="card-content">
-                    <span class="icon">🤝</span>
-                    <h3>Skill Support</h3>
-                    <p>I thrive on supporting and uplifting peers who have unique technical skills and creative ideas.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="hidden sm:flex items-center gap-2 rounded-full border border-white/[.07] bg-white/[.025] px-3 py-1.5 text-xs text-zinc-400">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-400 pulse-dot"></span>
+Client-side analysis engine
+</div>
 
-    <!-- Contact Section -->
-    <section id="contact" class="container text-center reveal">
-        <div class="section-header center-header">
-            <span class="mono-text">03.</span>
-            <h2>Connect With Me</h2>
-        </div>
-        <p class="contact-text">Based in Thrissur, Kerala. Always open to talking about tech, gaming, or checking out your latest project.</p>
-        <a href="mailto: iamadharshtu9980@gmail.com" class="btn pulse-btn">Send a Message</a>
-    </section>
+<button id="resetBtn" class="tooltip grid h-10 w-10 place-items-center rounded-xl border border-white/[.08] bg-white/[.025] text-zinc-400" data-tip="Reset" aria-label="Reset analysis">
+<i data-lucide="rotate-ccw" class="h-4 w-4"></i>
+</button>
 
-    <footer>
-        <p class="mono-text">&copy; 2026 Adharsh TU.</p>
-    </footer>
+</div>
+</div>
+</header>
 
-    <!-- JavaScript for Terminal Typing Effect -->
-    <script>
-        const text = "> System Initialize... Welcome to the workspace.";
-        let i = 0;
-        const speed = 50; 
-        
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
-        
-        // Starts the typing effect once the page loads
-        window.onload = typeWriter;
-    </script>
+<main class="relative z-10 mx-auto max-w-7xl px-4 pb-20 pt-10 sm:px-6 lg:px-8 lg:pt-16">
+
+<section class="mx-auto max-w-4xl text-center">
+
+<div class="mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-400/15 bg-indigo-500/[.07] px-3 py-1.5 text-xs font-medium text-indigo-300">
+<i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+Reverse-engineer your learning path
+</div>
+
+<h1 class="hero-title text-4xl font-bold tracking-[-.035em] text-white sm:text-5xl lg:text-6xl">
+Does your syllabus match<br class="hidden sm:block">
+<span class="text-indigo-300">the skills the market wants?</span>
+</h1>
+
+<p class="mx-auto mt-5 max-w-2xl text-sm leading-6 text-zinc-400 sm:text-base">
+Paste a target job requirement or skill list. Reverse Syllabus maps it against representative curricula and exposes direct coverage, practical readiness, theory overhead, and market gaps.
+</p>
+
+</section>
+
+<section id="inputSection" class="mx-auto mt-10 max-w-5xl">
+<div class="glass overflow-hidden rounded-2xl shadow-glow">
+
+<div class="border-b border-white/[.06] px-4 py-4 sm:px-6">
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+<div>
+<h2 class="text-sm font-semibold text-white">Target skill profile</h2>
+<p class="mt-1 text-xs text-zinc-500">Job description, tools, requirements, or comma-separated skills.</p>
+</div>
+<div id="inputCount" class="text-xs tabular-nums text-zinc-600">0 terms</div>
+</div>
+</div>
+
+<div class="p-4 sm:p-6">
+
+<textarea id="skillInput" aria-label="Target skills or job description"
+placeholder="Example: React, TypeScript, Node.js, REST APIs, PostgreSQL, Docker, GitHub Actions, AWS, testing, system design..."
+class="w-full rounded-xl border border-white/[.08] bg-black/20 px-4 py-4 text-sm leading-6 text-zinc-200 placeholder:text-zinc-600 transition"></textarea>
+
+<div class="mt-4">
+<div class="mb-2 flex items-center justify-between">
+<span class="text-[11px] font-medium uppercase tracking-[.16em] text-zinc-500">Quick presets</span>
+<button id="clearInput" class="text-xs text-zinc-500">Clear</button>
+</div>
+
+<div class="flex flex-wrap gap-2">
+
+<button class="chip rounded-full border border-white/[.08] bg-white/[.025] px-3 py-2 text-xs text-zinc-400" data-preset="fullstack">Full-Stack Web Dev</button>
+
+<button class="chip rounded-full border border-white/[.08] bg-white/[.025] px-3 py-2 text-xs text-zinc-400" data-preset="edge">Edge Computing & Embedded Linux</button>
+
+<button class="chip rounded-full border border-white/[.08] bg-white/[.025] px-3 py-2 text-xs text-zinc-400" data-preset="analytics">Data Analytics & Log Forensics</button>
+
+<button class="chip rounded-full border border-white/[.08] bg-white/[.025] px-3 py-2 text-xs text-zinc-400" data-preset="devops">Cloud DevOps</button>
+
+<button class="chip rounded-full border border-white/[.08] bg-white/[.025] px-3 py-2 text-xs text-zinc-400" data-preset="security">Cybersecurity</button>
+
+</div>
+</div>
+
+<div class="mt-6 grid gap-3 sm:grid-cols-2">
+
+<label class="block">
+<span class="mb-2 block text-[11px] font-medium uppercase tracking-[.16em] text-zinc-500">Domain</span>
+<div class="relative">
+<i data-lucide="layers-3" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600"></i>
+<select id="domainFilter" class="h-12 w-full appearance-none rounded-xl border border-white/[.08] bg-black/20 pl-10 pr-10 text-sm text-zinc-300">
+<option value="all">All domains</option>
+<option value="cs">Computer Science</option>
+<option value="vocational">Vocational / B.Voc</option>
+<option value="electronics">Electronics</option>
+<option value="data">Data Science</option>
+</select>
+<i data-lucide="chevron-down" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600"></i>
+</div>
+</label>
+
+<label class="block">
+<span class="mb-2 block text-[11px] font-medium uppercase tracking-[.16em] text-zinc-500">Region / Framework</span>
+<div class="relative">
+<i data-lucide="globe-2" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600"></i>
+<select id="regionFilter" class="h-12 w-full appearance-none rounded-xl border border-white/[.08] bg-black/20 pl-10 pr-10 text-sm text-zinc-300">
+<option value="all">All frameworks</option>
+<option value="global">Global Standard</option>
+<option value="national">National Skill Frameworks</option>
+<option value="university">University General</option>
+</select>
+<i data-lucide="chevron-down" class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600"></i>
+</div>
+</label>
+
+</div>
+
+<button id="analyzeBtn" class="mt-6 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-indigo-500 px-5 text-sm font-semibold text-white shadow-lg shadow-indigo-950/30 transition hover:bg-indigo-400 disabled:opacity-50">
+<i data-lucide="scan-line" class="h-4 w-4"></i>
+Analyze Curriculum Fit
+</button>
+
+</div>
+</div>
+</section>
+<section id="loadingSection" class="mx-auto mt-8 hidden max-w-5xl">
+<div class="glass relative overflow-hidden rounded-2xl p-6 sm:p-8">
+<div class="scan-line"></div>
+
+<div class="flex items-center gap-3">
+<div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-indigo-500/10 text-indigo-300">
+<i data-lucide="loader-circle" class="h-5 w-5 animate-spin"></i>
+</div>
+<div>
+<div id="loadingTitle" class="text-sm font-semibold text-white">Parsing target profile</div>
+<div id="loadingSubtitle" class="mt-1 text-xs text-zinc-500">Tokenizing skills and normalizing aliases...</div>
+</div>
+</div>
+
+<div class="mt-6 space-y-2">
+<div class="loading-bar h-2 rounded-full bg-white/[.05]">
+<div id="loadingProgress" class="progress-fill h-full rounded-full bg-indigo-400"></div>
+</div>
+<div class="flex justify-between text-[10px] uppercase tracking-[.15em] text-zinc-600">
+<span>Parse</span><span>Match</span><span>Audit</span><span>Report</span>
+</div>
+</div>
+</div>
+</section>
+
+<section id="resultsSection" class="mx-auto mt-10 hidden max-w-7xl">
+
+<div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+
+<div>
+<div class="mb-2 flex items-center gap-2 text-xs text-emerald-400">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+Analysis complete
+</div>
+<h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl">Curriculum audit</h2>
+<p id="resultSubtitle" class="mt-1 max-w-2xl text-sm text-zinc-500"></p>
+</div>
+
+<div class="flex flex-wrap gap-2">
+<button id="copyBtn" class="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/[.08] bg-white/[.025] px-4 text-xs font-medium text-zinc-300">
+<i data-lucide="copy" class="h-4 w-4"></i>Copy Audit
+</button>
+
+<button id="downloadBtn" class="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/[.08] bg-white/[.025] px-4 text-xs font-medium text-zinc-300">
+<i data-lucide="download" class="h-4 w-4"></i>Markdown
+</button>
+
+<button id="newAnalysisBtn" class="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-indigo-500 px-4 text-xs font-semibold text-white">
+<i data-lucide="plus" class="h-4 w-4"></i>New analysis
+</button>
+</div>
+</div>
+
+<div class="grid gap-4 lg:grid-cols-[1.05fr_1fr_1fr]">
+
+<div class="glass metric-card rounded-2xl p-5 sm:p-6">
+<div class="flex items-start justify-between">
+<div>
+<div class="text-[11px] font-medium uppercase tracking-[.16em] text-zinc-500">Curriculum match</div>
+<div class="mt-1 text-xs text-zinc-600">Direct skill alignment</div>
+</div>
+<div class="rounded-lg bg-indigo-500/10 p-2 text-indigo-300">
+<i data-lucide="target" class="h-4 w-4"></i>
+</div>
+</div>
+
+<div class="relative mx-auto mt-5 h-48 w-48">
+<svg class="score-ring h-full w-full" viewBox="0 0 200 200">
+<circle class="score-ring-track" cx="100" cy="100" r="78"></circle>
+<circle id="scoreRing" class="score-ring-value" cx="100" cy="100" r="78" stroke-dasharray="490.09" stroke-dashoffset="490.09"></circle>
+</svg>
+
+<div class="absolute inset-0 grid place-items-center text-center">
+<div>
+<div id="scoreValue" class="text-4xl font-bold tracking-tight text-white">0%</div>
+<div class="mt-1 text-[10px] uppercase tracking-[.16em] text-zinc-600">match score</div>
+</div>
+</div>
+</div>
+
+<div class="mt-4 rounded-xl border border-white/[.06] bg-white/[.02] p-3 text-xs leading-5 text-zinc-500">
+Score reflects normalized target skills directly represented by the selected curriculum dataset.
+</div>
+</div>
+
+<div class="glass metric-card rounded-2xl p-5 sm:p-6">
+<div class="flex items-start justify-between">
+<div>
+<div class="text-[11px] font-medium uppercase tracking-[.16em] text-zinc-500">Market-ready coverage</div>
+<div class="mt-1 text-xs text-zinc-600">Practical exposure estimate</div>
+</div>
+<div class="rounded-lg bg-emerald-500/10 p-2 text-emerald-300">
+<i data-lucide="briefcase-business" class="h-4 w-4"></i>
+</div>
+</div>
+
+<div class="mt-8 flex items-end justify-between">
+<span id="practicalValue" class="text-4xl font-bold tracking-tight text-white">0%</span>
+<span class="mb-1 rounded-full bg-emerald-400/10 px-2 py-1 text-[10px] font-medium text-emerald-300">Practical</span>
+</div>
+
+<div class="mt-5 h-2 overflow-hidden rounded-full bg-white/[.06]">
+<div id="practicalBar" class="bar-animated h-full rounded-full bg-emerald-400" style="width:0%"></div>
+</div>
+
+<div class="mt-7 flex items-end justify-between">
+<div>
+<div class="text-[11px] uppercase tracking-[.14em] text-zinc-600">Theory overhead</div>
+<div id="theoryValue" class="mt-1 text-2xl font-bold text-white">0%</div>
+</div>
+<div class="w-1/2">
+<div class="h-2 overflow-hidden rounded-full bg-white/[.06]">
+<div id="theoryBar" class="bar-animated h-full rounded-full bg-amber-400" style="width:0%"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="glass metric-card rounded-2xl p-5 sm:p-6">
+<div class="flex items-start justify-between">
+<div>
+<div class="text-[11px] font-medium uppercase tracking-[.16em] text-zinc-500">Audit signals</div>
+<div class="mt-1 text-xs text-zinc-600">Coverage and curriculum risks</div>
+</div>
+<div class="rounded-lg bg-amber-500/10 p-2 text-amber-300">
+<i data-lucide="radar" class="h-4 w-4"></i>
+</div>
+</div>
+
+<div class="mt-6 grid grid-cols-2 gap-3">
+
+<div class="rounded-xl border border-white/[.06] bg-white/[.02] p-3">
+<div id="hitCount" class="text-2xl font-bold text-emerald-300">0</div>
+<div class="mt-1 text-[10px] uppercase tracking-[.12em] text-zinc-600">Skill hits</div>
+</div>
+
+<div class="rounded-xl border border-white/[.06] bg-white/[.02] p-3">
+<div id="gapCount" class="text-2xl font-bold text-amber-300">0</div>
+<div class="mt-1 text-[10px] uppercase tracking-[.12em] text-zinc-600">Market gaps</div>
+</div>
+
+<div class="rounded-xl border border-white/[.06] bg-white/[.02] p-3">
+<div id="obsoleteCount" class="text-2xl font-bold text-rose-300">0</div>
+<div class="mt-1 text-[10px] uppercase tracking-[.12em] text-zinc-600">Legacy items</div>
+</div>
+
+<div class="rounded-xl border border-white/[.06] bg-white/[.02] p-3">
+<div id="curriculumCount" class="text-2xl font-bold text-indigo-300">0</div>
+<div class="mt-1 text-[10px] uppercase tracking-[.12em] text-zinc-600">Curricula</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="mt-4 grid gap-4 lg:grid-cols-2">
+
+<article class="glass rounded-2xl p-5 sm:p-6">
+<div class="flex items-start justify-between gap-4">
+<div>
+<h3 class="flex items-center gap-2 text-sm font-semibold text-white">
+<span class="grid h-7 w-7 place-items-center rounded-lg bg-emerald-400/10 text-emerald-300">
+<i data-lucide="check" class="h-4 w-4"></i>
+</span>
+High-value hits
+</h3>
+<p class="mt-2 text-xs leading-5 text-zinc-500">Target skills directly represented in the analyzed curricula.</p>
+</div>
+<span id="hitBadge" class="rounded-full bg-emerald-400/10 px-2.5 py-1 text-[10px] font-medium text-emerald-300">0</span>
+</div>
+<div id="hitsList" class="mt-5 flex min-h-20 flex-wrap content-start gap-2"></div>
+</article>
+
+<article class="glass rounded-2xl p-5 sm:p-6">
+<div class="flex items-start justify-between gap-4">
+<div>
+<h3 class="flex items-center gap-2 text-sm font-semibold text-white">
+<span class="grid h-7 w-7 place-items-center rounded-lg bg-amber-400/10 text-amber-300">
+<i data-lucide="alert-triangle" class="h-4 w-4"></i>
+</span>
+Blind spots / missing skills
+</h3>
+<p class="mt-2 text-xs leading-5 text-zinc-500">Requested capabilities with insufficient direct syllabus coverage.</p>
+</div>
+<span id="gapBadge" class="rounded-full bg-amber-400/10 px-2.5 py-1 text-[10px] font-medium text-amber-300">0</span>
+</div>
+<div id="gapsList" class="mt-5 flex min-h-20 flex-wrap content-start gap-2"></div>
+</article>
+
+</div>
+<div class="glass mt-4 rounded-2xl overflow-hidden">
+
+<div class="border-b border-white/[.06] px-5 py-5 sm:px-6">
+<div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+<div>
+<h3 class="text-sm font-semibold text-white">Curriculum coverage matrix</h3>
+<p class="mt-1 text-xs text-zinc-500">Compare how each curriculum maps against your target profile.</p>
+</div>
+<div class="text-[10px] uppercase tracking-[.14em] text-zinc-600">Deterministic client-side dataset</div>
+</div>
+</div>
+
+<div id="curriculumMatrix" class="divide-y divide-white/[.05]"></div>
+</div>
+
+<div id="legacySection" class="mt-4 hidden">
+<div class="rounded-2xl border border-rose-400/15 bg-rose-400/[.035] p-5 sm:p-6">
+
+<div class="flex gap-4">
+
+<div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-rose-400/10 text-rose-300">
+<i data-lucide="triangle-alert" class="h-5 w-5"></i>
+</div>
+
+<div class="min-w-0">
+
+<h3 class="text-sm font-semibold text-rose-200">Obsolete coursework warning</h3>
+
+<p class="mt-1 text-xs leading-5 text-zinc-500">
+These syllabus elements are marked as legacy in the embedded audit dataset.
+“Legacy” describes the dataset tag; it does not mean the topic has zero educational value.
+</p>
+
+<div id="legacyList" class="mt-4 grid gap-2 sm:grid-cols-2"></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="mt-4 grid gap-4 lg:grid-cols-2">
+
+<article class="glass rounded-2xl p-5 sm:p-6">
+
+<h3 class="text-sm font-semibold text-white">Theory vs. hands-on ratio</h3>
+<p class="mt-1 text-xs text-zinc-500">Aggregate practical-lab signal across matched curricula.</p>
+
+<div class="mt-8">
+<div class="flex justify-between text-xs">
+<span class="text-emerald-300">Hands-on <strong id="ratioPractical">0%</strong></span>
+<span class="text-amber-300">Theory <strong id="ratioTheory">0%</strong></span>
+</div>
+
+<div class="mt-3 flex h-4 overflow-hidden rounded-full bg-white/[.05]">
+<div id="ratioPracticalBar" class="bg-emerald-400 transition-all duration-1000" style="width:0%"></div>
+<div id="ratioTheoryBar" class="bg-amber-400 transition-all duration-1000" style="width:0%"></div>
+</div>
+</div>
+
+<div class="mt-6 grid grid-cols-2 gap-3">
+
+<div class="rounded-xl border border-white/[.06] p-3">
+<div class="text-[10px] uppercase tracking-[.14em] text-zinc-600">Lab-heavy</div>
+<div id="labHeavy" class="mt-1 text-lg font-semibold text-white">—</div>
+</div>
+
+<div class="rounded-xl border border-white/[.06] p-3">
+<div class="text-[10px] uppercase tracking-[.14em] text-zinc-600">Theory-heavy</div>
+<div id="theoryHeavy" class="mt-1 text-lg font-semibold text-white">—</div>
+</div>
+
+</div>
+</article>
+
+<article class="glass rounded-2xl p-5 sm:p-6">
+
+<h3 class="text-sm font-semibold text-white">Target skill map</h3>
+<p class="mt-1 text-xs text-zinc-500">Every normalized input term and its dataset coverage.</p>
+
+<div id="skillMap" class="mt-5 max-h-72 space-y-2 overflow-auto pr-1"></div>
+
+</article>
+
+</div>
+
+<div class="mt-4">
+
+<div class="mb-3 flex items-end justify-between">
+<div>
+<h3 class="text-sm font-semibold text-white">Syllabus breakdown</h3>
+<p class="mt-1 text-xs text-zinc-500">Modules, subtopics, lab exposure, and legacy tags.</p>
+</div>
+</div>
+
+<div id="syllabusAccordion" class="space-y-2"></div>
+
+</div>
+
+<div class="mt-6 rounded-xl border border-white/[.06] bg-white/[.015] p-4 text-[11px] leading-5 text-zinc-600">
+
+<strong class="text-zinc-500">Method note:</strong>
+This is a deterministic client-side simulation using a representative embedded dataset.
+It is not a live labor-market survey, accreditation assessment, or substitute for reviewing an institution's current syllabus.
+
+</div>
+
+</section>
+</main>
+
+<div id="toast" class="toast fixed bottom-5 left-1/2 z-50 -translate-x-1/2">
+<div class="glass flex items-center gap-2 rounded-xl px-4 py-3 text-xs text-zinc-200 shadow-2xl">
+<i id="toastIcon" data-lucide="check-circle-2" class="h-4 w-4 text-emerald-300"></i>
+<span id="toastText">Copied</span>
+</div>
+</div>
+
+<script>
+"use strict";
+
+const CURRICULA=[{
+id:"bvoc-software",
+name:"B.Voc Software Development",
+short:"B.Voc Software",
+domain:"vocational",
+region:"national",
+institution:"Applied vocational curriculum",
+practicalRatio:58,
+theoryRatio:42,
+modules:[
+{name:"Web Development",lab:70,topics:["HTML","CSS","JavaScript","React","REST APIs","responsive design","Git"]},
+{name:"Server-side Development",lab:65,topics:["Node.js","Express","REST APIs","authentication","SQL","PostgreSQL","MongoDB"]},
+{name:"Software Engineering",lab:45,topics:["SDLC","UML","testing","debugging","version control","Git","agile"]},
+{name:"Cloud and Deployment",lab:55,topics:["Docker","Linux","AWS","CI/CD","GitHub Actions","deployment"]},
+{name:"Programming Foundations",lab:50,topics:["Python","Java","data structures","algorithms","object oriented programming"]}
+]
+},
+
+{
+id:"bsc-cs",
+name:"Traditional B.Sc. Computer Science",
+short:"B.Sc. CS",
+domain:"cs",
+region:"university",
+institution:"General university curriculum",
+practicalRatio:38,
+theoryRatio:62,
+modules:[
+{name:"Programming & Algorithms",lab:35,topics:["C","C++","Java","Python","data structures","algorithms","object oriented programming"]},
+{name:"Database Systems",lab:35,topics:["SQL","relational databases","normalization","transactions","PostgreSQL"]},
+{name:"Operating Systems",lab:30,topics:["processes","threads","memory management","Linux","file systems"]},
+{name:"Computer Networks",lab:35,topics:["TCP/IP","HTTP","DNS","routing","network security"]},
+{name:"Web Technologies",lab:45,topics:["HTML","CSS","JavaScript","PHP","AJAX","REST APIs"]},
+{name:"Legacy Systems",lab:15,topics:["Applet programming","Flash","Perl CGI"],legacy:["Applet programming","Flash","Perl CGI"]}
+]
+},
+
+{
+id:"cloud-micro",
+name:"Cloud Engineering Micro-Credentials",
+short:"Cloud Micro-Creds",
+domain:"cs",
+region:"global",
+institution:"Industry-oriented modular credential",
+practicalRatio:78,
+theoryRatio:22,
+modules:[
+{name:"Cloud Foundations",lab:75,topics:["AWS","Azure","GCP","IAM","VPC","cloud architecture"]},
+{name:"Containers & Orchestration",lab:90,topics:["Docker","Kubernetes","containerization","Helm","service discovery"]},
+{name:"Infrastructure as Code",lab:90,topics:["Terraform","Infrastructure as Code","AWS","configuration management"]},
+{name:"DevOps Automation",lab:85,topics:["Git","GitHub Actions","CI/CD","Jenkins","observability","monitoring"]},
+{name:"Cloud Security",lab:65,topics:["IAM","secrets management","TLS","network security","zero trust"]}
+]
+},
+
+{
+id:"polytech-computing",
+name:"Modern Polytechnic Computing Diploma",
+short:"Polytechnic Diploma",
+domain:"vocational",
+region:"national",
+institution:"Applied technical diploma",
+practicalRatio:68,
+theoryRatio:32,
+modules:[
+{name:"Programming Lab",lab:75,topics:["Python","JavaScript","C","data structures","debugging","Git"]},
+{name:"Web Application Lab",lab:80,topics:["HTML","CSS","JavaScript","React","Node.js","REST APIs"]},
+{name:"Database Practice",lab:70,topics:["SQL","MySQL","PostgreSQL","MongoDB","database design"]},
+{name:"Linux & Networking",lab:65,topics:["Linux","shell scripting","TCP/IP","DNS","HTTP","network troubleshooting"]},
+{name:"Industrial Project",lab:90,topics:["GitHub","documentation","testing","deployment","team collaboration"]}
+]
+},
+
+{
+id:"embedded-linux",
+name:"Embedded Systems & Edge Computing Diploma",
+short:"Embedded / Edge",
+domain:"electronics",
+region:"national",
+institution:"Embedded and industrial computing curriculum",
+practicalRatio:72,
+theoryRatio:28,
+modules:[
+{name:"Microcontrollers",lab:85,topics:["C","C++","microcontrollers","GPIO","UART","SPI","I2C","interrupts"]},
+{name:"Embedded Linux",lab:80,topics:["Linux","Bash","device drivers","Yocto","systemd","cross compilation"]},
+{name:"Edge Computing",lab:75,topics:["edge computing","MQTT","IoT","Python","Docker","data ingestion"]},
+{name:"Networking for IoT",lab:65,topics:["TCP/IP","HTTP","MQTT","Wi-Fi","Bluetooth","network security"]},
+{name:"Hardware Interfaces",lab:90,topics:["sensors","actuators","ADC","PWM","PCB fundamentals"]}
+]
+},
+
+{
+id:"data-forensics",
+name:"Data Analytics & Log Forensics Certificate",
+short:"Analytics / Forensics",
+domain:"data",
+region:"global",
+institution:"Applied data and operations analytics",
+practicalRatio:76,
+theoryRatio:24,
+modules:[
+{name:"Data Analysis",lab:80,topics:["Python","Pandas","NumPy","data cleaning","statistics","exploratory data analysis"]},
+{name:"SQL & Warehousing",lab:75,topics:["SQL","PostgreSQL","data warehouse","ETL","dimensional modeling"]},
+{name:"Visualization",lab:85,topics:["Power BI","Tableau","data visualization","dashboards","KPI"]},
+{name:"Log Forensics",lab:80,topics:["log analysis","SIEM","Splunk","ELK","regex","incident investigation"]},
+{name:"Machine Learning Foundations",lab:65,topics:["machine learning","scikit-learn","classification","regression","feature engineering"]}
+]
+},
+
+{
+id:"cybersecurity",
+name:"Cybersecurity Operations Certificate",
+short:"Cybersecurity Ops",
+domain:"cs",
+region:"global",
+institution:"Security operations curriculum",
+practicalRatio:74,
+theoryRatio:26,
+modules:[
+{name:"Security Foundations",lab:55,topics:["CIA triad","authentication","authorization","cryptography","TLS"]},
+{name:"Network Defense",lab:80,topics:["TCP/IP","firewalls","IDS","IPS","Wireshark","network security"]},
+{name:"SOC Operations",lab:85,topics:["SIEM","Splunk","log analysis","incident response","threat detection"]},
+{name:"Cloud Security",lab:70,topics:["AWS","IAM","cloud security","secrets management","zero trust"]},
+{name:"Security Testing",lab:80,topics:["OWASP","penetration testing","vulnerability scanning","Burp Suite","Python"]}
+]
+}
+
+];
+
+const PRESETS={
+fullstack:`Build and maintain production web applications using HTML, CSS, JavaScript, TypeScript, React, Node.js, Express, REST APIs, PostgreSQL, MongoDB, Git, GitHub, Docker, CI/CD, GitHub Actions, AWS, automated testing, authentication, responsive design and system design.`,
+
+edge:`Develop edge computing and embedded Linux systems using C, C++, Python, Linux, Bash, microcontrollers, GPIO, UART, SPI, I2C, device drivers, Yocto, Docker, MQTT, IoT, TCP/IP, sensors, networking and cross compilation.`,
+
+analytics:`Perform data analytics and log forensics using Python, Pandas, NumPy, SQL, PostgreSQL, data cleaning, statistics, dashboards, Power BI, Tableau, ETL, data warehouses, log analysis, SIEM, Splunk, ELK, regex, incident investigation and machine learning.`,
+
+devops:`Operate cloud DevOps platforms using AWS, Azure, GCP, Linux, Docker, Kubernetes, Terraform, Infrastructure as Code, Git, GitHub Actions, CI/CD, Jenkins, IAM, secrets management, observability, monitoring, networking and cloud security.`,
+
+security:`Work in cybersecurity operations using network security, TCP/IP, firewalls, IDS, IPS, Wireshark, SIEM, Splunk, log analysis, incident response, threat detection, AWS, IAM, zero trust, OWASP, penetration testing, vulnerability scanning, Burp Suite and Python.`
+};
+
+const ALIASES={
+"js":"javascript",
+"javascript":"javascript",
+"ts":"typescript",
+"typescript":"typescript",
+"node":"node.js",
+"nodejs":"node.js",
+"reactjs":"react",
+"postgres":"postgresql",
+"postgresql":"postgresql",
+"mongo":"mongodb",
+"k8s":"kubernetes",
+"iac":"infrastructure as code",
+"cicd":"ci/cd",
+"ci cd":"ci/cd",
+"amazon web services":"aws",
+"embedded linux":"embedded linux",
+"edge computing":"edge computing",
+"machine learning":"machine learning",
+"data analytics":"data analysis",
+"log forensics":"log analysis"
+};
+
+let lastAnalysis=null;
+let toastTimer=null;
+
+const $=id=>document.getElementById(id);
+
+function normalize(text){
+return String(text||"")
+.toLowerCase()
+.replace(/[–—]/g,"-")
+.replace(/[^\p{L}\p{N}+#./\-\s]/gu," ")
+.replace(/\s+/g," ")
+.trim();
+}
+
+function canonical(text){
+const value=normalize(text);
+return ALIASES[value]||value;
+}
+
+function safeArray(value){
+return Array.isArray(value)?value:[];
+}
+
+function getCurricula(){
+const domain=$("domainFilter").value;
+const region=$("regionFilter").value;
+
+return CURRICULA.filter(c=>{
+const domainOK=domain==="all"||c.domain===domain;
+const regionOK=region==="all"||c.region===region;
+return domainOK&&regionOK;
+});
+}
+function extractTerms(input){
+const normalized=normalize(input);
+
+if(!normalized)return[];
+
+const datasetTerms=[];
+
+CURRICULA.forEach(curriculum=>{
+curriculum.modules.forEach(module=>{
+module.topics.forEach(topic=>datasetTerms.push(normalize(topic)));
+safeArray(module.legacy).forEach(topic=>datasetTerms.push(normalize(topic)));
+});
+});
+
+const known=[...new Set(datasetTerms)]
+.filter(Boolean)
+.sort((a,b)=>b.length-a.length);
+
+const foundKnown=[];
+
+known.forEach(term=>{
+if(term.length>=3&&normalized.includes(term)){
+foundKnown.push(canonical(term));
+}
+});
+
+const commaParts=input
+.split(/[,;\n|]/)
+.map(x=>canonical(x))
+.filter(x=>x.length>=2&&x.length<=60);
+
+const words=normalized
+.split(/\s+/)
+.filter(word=>word.length>=3)
+.filter(word=>![
+"and","the","for","with","using","build","maintain",
+"work","working","develop","development","experience",
+"knowledge","strong","skills","skill","required","ability",
+"production","applications","systems","based","including"
+].includes(word));
+
+const terms=[...new Set([...foundKnown,...commaParts,...words])]
+.map(canonical)
+.filter(Boolean);
+
+return terms.slice(0,100);
+}
+
+function buildSkillUniverse(curricula){
+const universe=new Map();
+
+curricula.forEach(curriculum=>{
+curriculum.modules.forEach(module=>{
+module.topics.forEach(topic=>{
+const key=canonical(topic);
+
+if(!universe.has(key)){
+universe.set(key,{
+label:topic,
+curricula:[],
+practical:[]
+});
+}
+
+const item=universe.get(key);
+
+if(!item.curricula.includes(curriculum.id)){
+item.curricula.push(curriculum.id);
+item.practical.push(module.lab);
+}
+});
+});
+});
+
+return universe;
+}
+
+function termMatches(term,topic){
+const a=canonical(term);
+const b=canonical(topic);
+
+if(!a||!b)return false;
+if(a===b)return true;
+
+if(b.includes(a)||a.includes(b)){
+return a.length>=4||b.length<=8;
+}
+
+const at=new Set(a.split(/\s+/));
+const bt=new Set(b.split(/\s+/));
+
+const overlap=[...at].filter(x=>bt.has(x)&&x.length>=3);
+
+return overlap.length>0 &&
+overlap.length/Math.max(at.size,bt.size)>=.5;
+}
+
+function analyze(input,curricula){
+
+try{
+
+const terms=extractTerms(input);
+
+if(!terms.length){
+return{
+terms:[],
+hits:[],
+gaps:[],
+curriculumResults:[],
+legacy:[],
+score:0,
+practical:0,
+theory:0,
+labHeavy:[],
+theoryHeavy:[]
+};
+}
+
+const skillUniverse=buildSkillUniverse(curricula);
+
+const hits=[];
+const gaps=[];
+
+terms.forEach(term=>{
+
+const matches=[];
+
+curricula.forEach(curriculum=>{
+curriculum.modules.forEach(module=>{
+module.topics.forEach(topic=>{
+
+if(termMatches(term,topic)){
+matches.push({
+curriculum:curriculum.id,
+topic,
+lab:module.lab,
+module:module.name
+});
+}
+
+});
+});
+});
+
+if(matches.length){
+
+const uniqueCurricula=[
+...new Set(matches.map(m=>m.curriculum))
+];
+
+hits.push({
+term,
+matches,
+coverage:Math.round(
+(uniqueCurricula.length/
+Math.max(curricula.length,1))*100
+)
+});
+
+}else{
+gaps.push(term);
+}
+
+});
+
+const score=Math.round(
+(hits.length/Math.max(terms.length,1))*100
+);
+
+const curriculumResults=curricula.map(curriculum=>{
+
+let covered=0;
+
+terms.forEach(term=>{
+const found=curriculum.modules.some(module=>
+module.topics.some(topic=>termMatches(term,topic))
+);
+
+if(found)covered++;
+});
+
+const match=Math.round(
+(covered/Math.max(terms.length,1))*100
+);
+
+const labs=curriculum.modules.map(m=>m.lab);
+
+const avgLab=Math.round(
+labs.reduce((a,b)=>a+b,0)/
+Math.max(labs.length,1)
+);
+
+const legacy=curriculum.modules.flatMap(module=>
+safeArray(module.legacy).map(item=>({
+curriculum:curriculum.name,
+module:module.name,
+item
+}))
+);
+
+return{
+curriculum,
+match,
+avgLab,
+legacy,
+covered,
+total:terms.length
+};
+
+}).sort((a,b)=>b.match-a.match);
+
+const practical=Math.round(
+curriculumResults.reduce(
+(sum,x)=>sum+x.avgLab,0
+)/Math.max(curriculumResults.length,1)
+);
+
+const theory=100-practical;
+
+const legacy=curriculumResults.flatMap(x=>x.legacy);
+
+const labHeavy=curriculumResults
+.filter(x=>x.avgLab>=65)
+.map(x=>x.curriculum.short);
+
+const theoryHeavy=curriculumResults
+.filter(x=>x.avgLab<50)
+.map(x=>x.curriculum.short);
+
+return{
+terms,
+hits,
+gaps,
+curriculumResults,
+legacy,
+score,
+practical,
+theory,
+labHeavy,
+theoryHeavy
+};
+
+}catch(error){
+
+console.warn("Analysis fallback:",error);
+
+return{
+terms:[],
+hits:[],
+gaps:[],
+curriculumResults:[],
+legacy:[],
+score:0,
+practical:0,
+theory:0,
+labHeavy:[],
+theoryHeavy:[]
+};
+
+}
+
+}
+
+function escapeHTML(value){
+return String(value??"")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+function icon(name,className="h-4 w-4"){
+return `<i data-lucide="${name}" class="${className}"></i>`;
+}
+function renderHits(result){
+
+const list=$("hitsList");
+
+$("hitCount").textContent=result.hits.length;
+$("hitBadge").textContent=result.hits.length;
+
+if(!result.hits.length){
+
+list.innerHTML=`
+<div class="w-full rounded-xl border border-white/[.06] bg-white/[.015] p-4 text-xs text-zinc-600">
+No direct dataset matches were detected.
+</div>`;
+
+return;
+}
+
+list.innerHTML=result.hits
+.sort((a,b)=>b.coverage-a.coverage)
+.map(hit=>`
+<span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/15 bg-emerald-400/[.06] px-3 py-1.5 text-xs text-emerald-200">
+${icon("check","h-3 w-3")}
+${escapeHTML(hit.term)}
+<span class="text-[10px] text-emerald-400/60">${hit.coverage}%</span>
+</span>
+`).join("");
+}
+
+function renderGaps(result){
+
+const list=$("gapsList");
+
+$("gapCount").textContent=result.gaps.length;
+$("gapBadge").textContent=result.gaps.length;
+
+if(!result.gaps.length){
+
+list.innerHTML=`
+<div class="w-full rounded-xl border border-emerald-400/10 bg-emerald-400/[.025] p-4 text-xs text-emerald-300/70">
+No uncovered target terms were detected.
+</div>`;
+
+return;
+}
+
+list.innerHTML=result.gaps.map(term=>`
+<span class="inline-flex items-center gap-1.5 rounded-full border border-amber-400/15 bg-amber-400/[.05] px-3 py-1.5 text-xs text-amber-200">
+${icon("minus","h-3 w-3")}
+${escapeHTML(term)}
+</span>
+`).join("");
+}
+
+function renderMatrix(result){
+
+const matrix=$("curriculumMatrix");
+
+if(!result.curriculumResults.length){
+
+matrix.innerHTML=`
+<div class="p-6 text-center text-xs text-zinc-600">
+No curricula match the selected filters.
+</div>`;
+
+return;
+}
+
+matrix.innerHTML=result.curriculumResults.map((item,index)=>{
+
+const scoreClass=
+item.match>=70?"text-emerald-300":
+item.match>=40?"text-amber-300":
+"text-rose-300";
+
+const scoreBg=
+item.match>=70?"bg-emerald-400":
+item.match>=40?"bg-amber-400":
+"bg-rose-400";
+
+return`
+<div class="animate-in p-5 sm:px-6" style="animation-delay:${index*60}ms">
+
+<div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
+<div class="min-w-0 md:w-[38%]">
+
+<div class="flex items-center gap-2">
+
+<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/[.04] text-zinc-400">
+${icon(
+item.curriculum.domain==="electronics"?"cpu":
+item.curriculum.domain==="data"?"chart-no-axes-combined":
+item.curriculum.domain==="vocational"?"wrench":
+"graduation-cap",
+"h-4 w-4"
+)}
+</span>
+
+<div class="min-w-0">
+
+<div class="truncate text-sm font-medium text-white">
+${escapeHTML(item.curriculum.name)}
+</div>
+
+<div class="mt-0.5 text-[10px] text-zinc-600">
+${escapeHTML(item.curriculum.institution)}
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="flex flex-1 items-center gap-4">
+
+<div class="min-w-0 flex-1">
+
+<div class="mb-2 flex justify-between text-[10px]">
+<span class="uppercase tracking-[.13em] text-zinc-600">Target coverage</span>
+<span class="font-semibold ${scoreClass}">${item.match}%</span>
+</div>
+
+<div class="h-2 overflow-hidden rounded-full bg-white/[.05]">
+<div class="h-full rounded-full ${scoreBg} transition-all duration-1000" style="width:${item.match}%"></div>
+</div>
+
+</div>
+
+<div class="w-20 shrink-0 text-right">
+<div class="text-sm font-semibold text-white">${item.avgLab}%</div>
+<div class="text-[9px] uppercase tracking-[.1em] text-zinc-600">lab ratio</div>
+</div>
+
+</div>
+</div>
+</div>
+`;
+
+}).join("");
+}
+
+function renderLegacy(result){
+
+const section=$("legacySection");
+const list=$("legacyList");
+
+$("obsoleteCount").textContent=result.legacy.length;
+
+if(!result.legacy.length){
+section.classList.add("hidden");
+list.innerHTML="";
+return;
+}
+
+section.classList.remove("hidden");
+
+list.innerHTML=result.legacy.map(item=>`
+<div class="rounded-xl border border-rose-400/10 bg-black/10 p-3">
+
+<div class="flex items-start gap-2">
+
+<span class="mt-0.5 text-rose-300">
+${icon("history","h-3.5 w-3.5")}
+</span>
+
+<div>
+
+<div class="text-xs font-medium text-zinc-300">
+${escapeHTML(item.item)}
+</div>
+
+<div class="mt-1 text-[10px] text-zinc-600">
+${escapeHTML(item.curriculum)} · ${escapeHTML(item.module)}
+</div>
+
+</div>
+</div>
+</div>
+`).join("");
+}
+
+function renderSkillMap(result){
+
+const container=$("skillMap");
+
+if(!result.terms.length){
+container.innerHTML=`<div class="text-xs text-zinc-600">No terms detected.</div>`;
+return;
+}
+
+const hitMap=new Map(result.hits.map(h=>[h.term,h]));
+
+container.innerHTML=result.terms.map(term=>{
+
+const hit=hitMap.get(term);
+const covered=Boolean(hit);
+
+return`
+<div class="flex items-center gap-3 rounded-xl border border-white/[.05] bg-white/[.015] px-3 py-2.5">
+
+<span class="grid h-7 w-7 shrink-0 place-items-center rounded-lg ${covered?"bg-emerald-400/10 text-emerald-300":"bg-amber-400/10 text-amber-300"}">
+${icon(covered?"check":"circle-alert","h-3.5 w-3.5")}
+</span>
+
+<div class="min-w-0 flex-1 truncate text-xs text-zinc-300">
+${escapeHTML(term)}
+</div>
+
+<span class="shrink-0 text-[10px] ${covered?"text-emerald-400":"text-amber-400"}">
+${covered?hit.coverage+"% coverage":"gap"}
+</span>
+
+</div>
+`;
+
+}).join("");
+}
+
+function renderAccordions(result){
+
+const container=$("syllabusAccordion");
+
+container.innerHTML=result.curriculumResults.map((item,index)=>`
+
+<div class="glass overflow-hidden rounded-2xl">
+
+<button
+class="accordion-trigger flex min-h-14 w-full items-center justify-between gap-4 px-4 py-4 text-left sm:px-5"
+data-index="${index}"
+aria-expanded="false">
+
+<span class="flex min-w-0 items-center gap-3">
+
+<span class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white/[.04] text-zinc-400">
+${icon("book-open","h-4 w-4")}
+</span>
+
+<span class="min-w-0">
+
+<span class="block truncate text-sm font-medium text-zinc-200">
+${escapeHTML(item.curriculum.name)}
+</span>
+
+<span class="mt-0.5 block text-[10px] text-zinc-600">
+${item.curriculum.modules.length} modules · ${item.avgLab}% practical · ${item.match}% target coverage
+</span>
+
+</span>
+</span>
+
+<span class="shrink-0 text-zinc-600 accordion-chevron transition-transform duration-300">
+${icon("chevron-down","h-4 w-4")}
+</span>
+
+</button>
+
+<div class="accordion-content">
+<div class="accordion-inner">
+
+<div class="border-t border-white/[.05] px-4 py-4 sm:px-5">
+
+<div class="grid gap-2">
+
+${item.curriculum.modules.map(module=>`
+
+<div class="rounded-xl border border-white/[.05] bg-white/[.015] p-3">
+
+<div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+
+<div>
+
+<div class="text-xs font-medium text-zinc-300">
+${escapeHTML(module.name)}
+</div>
+
+<div class="mt-2 flex flex-wrap gap-1.5">
+
+${module.topics.map(topic=>`
+<span class="rounded-md border border-white/[.05] px-2 py-1 text-[10px] text-zinc-500">
+${escapeHTML(topic)}
+</span>
+`).join("")}
+
+</div>
+
+</div>
+
+<div class="shrink-0 text-left sm:text-right">
+<div class="text-xs font-semibold ${module.lab>=65?"text-emerald-300":"text-zinc-300"}">
+${module.lab}%
+</div>
+<div class="text-[9px] uppercase tracking-[.12em] text-zinc-600">lab</div>
+</div>
+
+</div>
+
+${safeArray(module.legacy).length?`
+
+<div class="mt-3 flex flex-wrap gap-1.5">
+
+${module.legacy.map(x=>`
+<span class="inline-flex items-center gap-1 rounded-md bg-rose-400/[.06] px-2 py-1 text-[10px] text-rose-300">
+${icon("history","h-3 w-3")}
+Legacy: ${escapeHTML(x)}
+</span>
+`).join("")}
+
+</div>
+
+`:""}
+
+</div>
+
+`).join("")}
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+`).join("");
+
+container.querySelectorAll(".accordion-trigger").forEach(trigger=>{
+
+trigger.addEventListener("click",()=>{
+
+const content=trigger.nextElementSibling;
+const chevron=trigger.querySelector(".accordion-chevron");
+const open=content.classList.toggle("open");
+
+trigger.setAttribute("aria-expanded",String(open));
+chevron.style.transform=open?"rotate(180deg)":"rotate(0deg)";
+
+});
+
+});
+}
+
+function animateNumber(element,target,suffix="%",duration=900){
+
+const start=performance.now();
+
+function tick(now){
+
+const progress=Math.min((now-start)/duration,1);
+const eased=1-Math.pow(1-progress,3);
+const value=Math.round(target*eased);
+
+element.textContent=`${value}${suffix}`;
+
+if(progress<1)requestAnimationFrame(tick);
+}
+
+requestAnimationFrame(tick);
+}
+
+function renderScore(result){
+
+const circumference=2*Math.PI*78;
+const offset=circumference-(result.score/100)*circumference;
+
+$("scoreRing").style.strokeDasharray=circumference;
+$("scoreRing").style.strokeDashoffset=circumference;
+
+requestAnimationFrame(()=>{
+$("scoreRing").style.strokeDashoffset=offset;
+});
+
+animateNumber($("scoreValue"),result.score);
+animateNumber($("practicalValue"),result.practical);
+animateNumber($("theoryValue"),result.theory);
+
+$("practicalBar").style.width=`${result.practical}%`;
+$("theoryBar").style.width=`${result.theory}%`;
+
+$("ratioPractical").textContent=`${result.practical}%`;
+$("ratioTheory").textContent=`${result.theory}%`;
+
+$("ratioPracticalBar").style.width=`${result.practical}%`;
+$("ratioTheoryBar").style.width=`${result.theory}%`;
+
+$("labHeavy").textContent=result.labHeavy.length?
+`${result.labHeavy.length} curriculum${result.labHeavy.length>1?"s":""}`:
+"None";
+
+$("theoryHeavy").textContent=result.theoryHeavy.length?
+`${result.theoryHeavy.length} curriculum${result.theoryHeavy.length>1?"s":""}`:
+"None";
+}
+function renderResults(result,curricula,input){
+
+lastAnalysis={
+...result,
+input,
+curricula,
+domain:$("domainFilter").value,
+region:$("regionFilter").value
+};
+
+$("resultSubtitle").textContent=
+`${result.terms.length} normalized target terms mapped against ${curricula.length} matching curricula.`;
+
+$("curriculumCount").textContent=curricula.length;
+
+renderScore(result);
+renderHits(result);
+renderGaps(result);
+renderMatrix(result);
+renderLegacy(result);
+renderSkillMap(result);
+renderAccordions(result);
+
+$("resultsSection").classList.remove("hidden");
+$("resultsSection").classList.add("animate-in");
+
+if(result.score>=75&&typeof confetti==="function"){
+
+setTimeout(()=>{
+try{
+confetti({
+particleCount:70,
+spread:55,
+origin:{y:.72},
+scalar:.75,
+disableForReducedMotion:true
+});
+}catch(_){}
+},500);
+
+}
+
+lucide.createIcons();
+}
+
+function runAnalysis(){
+
+const input=$("skillInput").value.trim();
+
+if(!input){
+showToast("Enter a skill profile or choose a preset.","alert-circle","amber");
+$("skillInput").focus();
+return;
+}
+
+const curricula=getCurricula();
+
+if(!curricula.length){
+showToast("No curricula match those filters.","filter-x","amber");
+return;
+}
+
+$("analyzeBtn").disabled=true;
+$("resultsSection").classList.add("hidden");
+$("loadingSection").classList.remove("hidden");
+
+const stages=[
+["Parsing target profile","Tokenizing skills and normalizing aliases...",18],
+["Scanning curriculum corpus",`Checking ${curricula.length} curriculum records...`,43],
+["Mapping direct skill coverage","Comparing normalized terms with module topics...",68],
+["Calculating audit signals","Estimating practical coverage and legacy exposure...",86],
+["Preparing report","Rendering curriculum matrix and skill map...",100]
+];
+
+let stage=0;
+
+const advance=()=>{
+
+const[title,subtitle,progress]=stages[stage];
+
+$("loadingTitle").textContent=title;
+$("loadingSubtitle").textContent=subtitle;
+$("loadingProgress").style.width=`${progress}%`;
+
+if(stage<stages.length-1){
+
+stage++;
+setTimeout(advance,360);
+
+}else{
+
+setTimeout(()=>{
+
+const result=analyze(input,curricula);
+
+$("loadingSection").classList.add("hidden");
+$("analyzeBtn").disabled=false;
+
+renderResults(result,curricula,input);
+
+setTimeout(()=>{
+$("resultsSection").scrollIntoView({
+behavior:"smooth",
+block:"start"
+});
+},80);
+
+},450);
+
+}
+};
+
+advance();
+}
+
+function generateMarkdown(result){
+
+const lines=[];
+
+lines.push("# Reverse Syllabus — Curriculum Audit");
+lines.push("");
+lines.push(`> Generated locally on ${new Date().toLocaleString()}`);
+lines.push("");
+
+lines.push("## Target Profile");
+lines.push("");
+lines.push(result.input);
+lines.push("");
+
+lines.push("## Summary");
+lines.push("");
+lines.push(`- **Curriculum Match Score:** ${result.score}%`);
+lines.push(`- **Market-Ready Practical Coverage:** ${result.practical}%`);
+lines.push(`- **Theoretical Overhead:** ${result.theory}%`);
+lines.push(`- **Direct Skill Hits:** ${result.hits.length}`);
+lines.push(`- **Critical Market Gaps:** ${result.gaps.length}`);
+lines.push(`- **Legacy Coursework Items:** ${result.legacy.length}`);
+lines.push("");
+
+lines.push("## High-Value Hits");
+lines.push("");
+
+if(result.hits.length){
+result.hits.forEach(x=>
+lines.push(`- ${x.term} — ${x.coverage}% curriculum coverage`)
+);
+}else{
+lines.push("- None detected.");
+}
+
+lines.push("");
+
+lines.push("## Blind Spots / Missing Skills");
+lines.push("");
+
+if(result.gaps.length){
+result.gaps.forEach(x=>lines.push(`- ${x}`));
+}else{
+lines.push("- None detected.");
+}
+
+lines.push("");
+
+lines.push("## Curriculum Matrix");
+lines.push("");
+lines.push("| Curriculum | Match | Practical/Lab |");
+lines.push("|---|---:|---:|");
+
+result.curriculumResults.forEach(x=>{
+lines.push(
+`| ${x.curriculum.name} | ${x.match}% | ${x.avgLab}% |`
+);
+});
+
+lines.push("");
+
+lines.push("## Legacy / Obsolete Tags");
+lines.push("");
+
+if(result.legacy.length){
+
+result.legacy.forEach(x=>{
+lines.push(
+`- **${x.item}** — ${x.curriculum} / ${x.module}`
+);
+});
+
+}else{
+lines.push("- None detected.");
+}
+
+lines.push("");
+lines.push("## Method Note");
+lines.push("");
+lines.push("This audit uses a deterministic embedded client-side dataset. It is not a live labor-market survey, accreditation assessment, or substitute for reviewing a current institutional syllabus.");
+
+return lines.join("\n");
+}
+
+async function copyAudit(){
+
+if(!lastAnalysis)return;
+
+const markdown=generateMarkdown(lastAnalysis);
+
+try{
+
+await navigator.clipboard.writeText(markdown);
+
+showToast(
+"Audit summary copied to clipboard.",
+"clipboard-check",
+"green"
+);
+
+}catch(_){
+
+const area=document.createElement("textarea");
+
+area.value=markdown;
+area.style.position="fixed";
+area.style.opacity="0";
+
+document.body.appendChild(area);
+
+area.select();
+
+try{
+
+document.execCommand("copy");
+
+showToast(
+"Audit summary copied.",
+"clipboard-check",
+"green"
+);
+
+}catch{
+
+showToast(
+"Copy failed. Use the Markdown download.",
+"alert-circle",
+"amber"
+);
+
+}
+
+area.remove();
+
+}
+}
+
+function downloadMarkdown(){
+
+if(!lastAnalysis)return;
+
+const content=generateMarkdown(lastAnalysis);
+
+const blob=new Blob(
+[content],
+{type:"text/markdown;charset=utf-8"}
+);
+
+const url=URL.createObjectURL(blob);
+
+const link=document.createElement("a");
+
+link.href=url;
+link.download="reverse-syllabus-audit.md";
+
+document.body.appendChild(link);
+
+link.click();
+
+link.remove();
+
+URL.revokeObjectURL(url);
+
+showToast(
+"Markdown report downloaded.",
+"download",
+"green"
+);
+}
+
+function showToast(message,iconName="check-circle-2",tone="green"){
+
+const toast=$("toast");
+const iconEl=$("toastIcon");
+
+$("toastText").textContent=message;
+
+iconEl.setAttribute("data-lucide",iconName);
+
+iconEl.className=
+`h-4 w-4 ${
+tone==="amber"
+?"text-amber-300":
+tone==="red"
+?"text-rose-300":
+"text-emerald-300"
+}`;
+
+lucide.createIcons();
+
+toast.classList.add("show");
+
+clearTimeout(toastTimer);
+
+toastTimer=setTimeout(()=>{
+toast.classList.remove("show");
+},2800);
+}
+
+function resetApp(){
+
+$("skillInput").value="";
+$("domainFilter").value="all";
+$("regionFilter").value="all";
+$("inputCount").textContent="0 terms";
+
+$("resultsSection").classList.add("hidden");
+$("loadingSection").classList.add("hidden");
+
+$("analyzeBtn").disabled=false;
+
+lastAnalysis=null;
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+}
+
+function updateInputCount(){
+
+const terms=extractTerms($("skillInput").value);
+
+$("inputCount").textContent=
+`${terms.length} term${terms.length===1?"":"s"}`;
+}
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+lucide.createIcons();
+
+$("skillInput").addEventListener(
+"input",
+updateInputCount
+);
+
+document.querySelectorAll("[data-preset]").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+const key=button.dataset.preset;
+
+$("skillInput").value=PRESETS[key]||"";
+
+updateInputCount();
+
+document.querySelectorAll("[data-preset]").forEach(x=>{
+x.classList.remove(
+"border-indigo-400/40",
+"bg-indigo-500/10",
+"text-indigo-200"
+);
+});
+
+button.classList.add(
+"border-indigo-400/40",
+"bg-indigo-500/10",
+"text-indigo-200"
+);
+
+$("skillInput").focus();
+
+});
+
+});
+
+$("analyzeBtn").addEventListener(
+"click",
+runAnalysis
+);
+
+$("skillInput").addEventListener(
+"keydown",
+event=>{
+
+if((event.ctrlKey||event.metaKey)&&event.key==="Enter"){
+
+event.preventDefault();
+runAnalysis();
+
+}
+
+});
+
+$("clearInput").addEventListener(
+"click",
+()=>{
+
+$("skillInput").value="";
+updateInputCount();
+$("skillInput").focus();
+
+}
+);
+
+$("copyBtn").addEventListener(
+"click",
+copyAudit
+);
+
+$("downloadBtn").addEventListener(
+"click",
+downloadMarkdown
+);
+
+$("newAnalysisBtn").addEventListener(
+"click",
+()=>{
+
+$("resultsSection").classList.add("hidden");
+$("skillInput").focus();
+
+window.scrollTo({
+top:$("inputSection").offsetTop-20,
+behavior:"smooth"
+});
+
+}
+);
+
+$("resetBtn").addEventListener(
+"click",
+resetApp
+);
+
+$("domainFilter").addEventListener(
+"change",
+()=>{
+
+if(lastAnalysis){
+showToast(
+"Filters changed — run analysis again.",
+"filter",
+"amber"
+);
+}
+
+}
+);
+
+$("regionFilter").addEventListener(
+"change",
+()=>{
+
+if(lastAnalysis){
+showToast(
+"Filters changed — run analysis again.",
+"filter",
+"amber"
+);
+}
+
+}
+);
+
+});
+</script>
+
 </body>
 </html>
